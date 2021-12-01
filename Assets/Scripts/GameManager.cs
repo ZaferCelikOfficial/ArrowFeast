@@ -16,8 +16,10 @@ public class GameManager : MonoBehaviour
     public int HighScore;
     public Text ScoreText;
     public Text HighScoreText;
+    public Text LevelText;
+    AudioSource MainMenuAudioSource;
 
-    public GameObject LevelCompletedPanel, LevelFailedPanel;
+    public GameObject LevelCompletedPanel, LevelFailedPanel,ScoreTextPanel,HighScoreTextPanel,IntroductionPanel,StartGamePanel;
     public List<GameObject> Levels = new List<GameObject>();
     [SerializeField] int LevelIndex = 0;
     int PointsCounted;
@@ -34,6 +36,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         HighScore = PlayerPrefs.GetInt("HighScore");
+        LevelText.text = "Level " + LevelNumber.ToString();
     }
     public void CreateLevel()
     {
@@ -50,10 +53,23 @@ public class GameManager : MonoBehaviour
     {
         isGameStarted = true;
         isGameEnded = false;
+        ArrowMover.Speed = 10;
+        ScoreTextPanel.SetActive(true);
+        HighScoreTextPanel.SetActive(true);
     }
     public void EndGame()
     {
         isGameEnded = true;
+    }
+    public void Introductions()
+    {
+        StartGamePanel.SetActive(false);
+        IntroductionPanel.SetActive(true);
+    }
+    public void ReturntoMainMenu()
+    {
+        StartGamePanel.SetActive(true);
+        IntroductionPanel.SetActive(false);
     }
     public void OnLevelCompleted()
     {

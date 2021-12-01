@@ -5,43 +5,70 @@ using TMPro;
 
 public class ArrowPositionRead : MonoBehaviour
 {
+    public static ArrowPositionRead instance;
     OperatorEnum MathOperations;
-    public static Vector3 ArrowPosition;
-    public static int ArrowNumber=1;
+    public Vector3 ArrowPosition;
+    public int ArrowNumber = 1;
     public TMP_Text HealthText;
+    AudioSource SuccessAudioSource;
+    [SerializeField] AudioClip Finished;
     private void Start()
     {
+        if (instance == null)
+            instance = this;
+
+        SuccessAudioSource = GetComponent<AudioSource>();
         HealthText.text = "1";
     }
     void Update()
     {
         ArrowPosition = this.transform.position;
     }
-    public static void UpdateNumberofArrows(OperatorEnum symbol, int number)
+    public void UpdateNumberofArrows(OperatorEnum symbol, int number)
     {
         Debug.Log(symbol);
         switch (symbol)
         {
             case OperatorEnum.summation:
-                ArrowNumber += number;
+                for (int i = 0; i < number; i++)
+                {
+                    ArrowPooler.instance.GetArrowFromPool();
+                }
+                //ArrowNumber += number;
                 break;
             case OperatorEnum.subtraction:
-                ArrowNumber -= number;
+                for (int i = 0; i < number; i++)
+                {
+                    ArrowPooler.instance.AddArrowToPool();
+                }
+                //ArrowNumber -= number;
                 break;
             case OperatorEnum.multiplication:
-                ArrowNumber *= number;
+                int sum = ArrowNumber * number;
+                sum = sum - ArrowNumber;
+                for (int i = 0; i < sum; i++)
+                {
+                    ArrowPooler.instance.GetArrowFromPool();
+                }
+                //ArrowNumber *= number;
                 break;
             case OperatorEnum.division:
-                ArrowNumber /= number;
+                int sum2 = ArrowNumber / number;
+                sum2 = ArrowNumber - sum2;
+                for (int i = 0; i < sum2; i++)
+                {
+                    ArrowPooler.instance.AddArrowToPool();
+                }
+                //ArrowNumber /= number;
                 break;
         }
         Debug.Log(ArrowNumber);
-        if (ArrowNumber<=0)
+        if (ArrowNumber <= 0)
         {
             Failed();
         }
     }
-    
+
     public static void Failed()
     {
         GameManager.instance.EndGame();
@@ -57,5 +84,9 @@ public class ArrowPositionRead : MonoBehaviour
         BoardTrigger OtherBoardTrigger = other.GetComponent<BoardTrigger>();
         if (OtherBoardTrigger == null) { return; }
         else { UpdateHealthBoxes(); }
+    }
+    public void SuccessSound()
+    {
+        SuccessAudioSource.PlayOneShot(Finished);
     }
 }

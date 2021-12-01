@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,7 +28,7 @@ public class ObjectPooler : MonoBehaviour
         Vector3 StartPosition = ArrowPositionRead.ArrowPosition;
         Distance.Add();
     } */  
-    void Start()
+   /* void Start()
     {
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
         foreach (Pool pool in pools)
@@ -69,7 +69,7 @@ public class ObjectPooler : MonoBehaviour
     private List<Vector3> movePositionList = new List<Vector3>(,new float[10f,20f,30f,40f,50f],new int[5,10,20,30]);
     movePositionList =Vector3(ArrowPositionRead.ArrowPosition,{ 10f, 20f, 30f,40f },{ 5, 10, 20, 40});
     
-    /*int positionIndex = 0;
+    int positionIndex = 0;
     positionIndex = (positionIndex + 1) % movePositionList.Count;
 
     public List<Vector3> MovePositionList { get => movePositionList; set => movePositionList = value; }
@@ -103,7 +103,7 @@ public class ObjectPooler : MonoBehaviour
     }
 }
 
-    if (Input.GetMouseButtonDown(1)) {
+    /*if (Input.GetMouseButtonDown(1)) {
             // Right mouse button down
             float3 targetPosition = UtilsClass.GetMouseWorldPosition();
     List<float3> movePositionList = GetPositionListAround(targetPosition, new float[] { 10f, 20f, 30f }, new int[] { 5, 10, 20 });

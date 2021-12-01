@@ -34,12 +34,16 @@ public class ArrowMover : MonoBehaviour
     private void Update()
     {
 
-        /*if (!GameManager.isGameStarted || GameManager.isGameEnded)
+        if (!GameManager.isGameStarted || GameManager.isGameEnded)
         {
             return;
-        }*/
-        MovePlayerForward();
-        MoveCharacterLeftRight();
+        }
+        else 
+        {
+            MovePlayerForward();
+            if (StartFinishingSequence.isMovingAvailable)
+            { MoveCharacterLeftRight(); }
+        }
     }
     void MoveCharacterLeftRight()
     {

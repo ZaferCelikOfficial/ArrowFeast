@@ -10,7 +10,6 @@ public class BoardTrigger : MonoBehaviour
     public TMP_Text MathText;
     public int number;
     private string MathOperator;
-    private int NumberofArrows=1;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +22,7 @@ public class BoardTrigger : MonoBehaviour
                 MathOperator = "-";
                 break;
             case OperatorEnum.division:
-                MathOperator = "÷";
+                MathOperator = "/";
                 break;
             case OperatorEnum.multiplication:
                 MathOperator = "x";
@@ -37,8 +36,13 @@ public class BoardTrigger : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        ArrowPositionRead.UpdateNumberofArrows(MathOperations, number);
+
+        if (!GameManager.isGameStarted || GameManager.isGameEnded)
+        {
+            return;
+        }
+        ArrowPositionRead.instance.UpdateNumberofArrows(MathOperations, number);
         this.transform.parent.gameObject.SetActive(false);
-    }            
+    }
 }
 
